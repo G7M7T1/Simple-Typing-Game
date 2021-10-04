@@ -52,6 +52,41 @@
     "substantial",
     "modified",
     "Recommend",
+    "sveltejs",
+    "Vanilla",
+    "JavaScript",
+    "warranted",
+    "rider",
+    "Dense",
+    "ordained",
+    "vexing",
+    "gravity",
+    "suspended",
+    "conspicuous",
+    "assented",
+    "purse",
+    "sanctioned",
+    "proceeding",
+    "exalt",
+    "malice",
+    "extravagant",
+    "assailing",
+    "sublimest",
+    "exertion",
+    "endowed",
+    "humiliated",
+    "suffrage",
+    "Musing",
+    "indications",
+    "dispatched",
+    "tract",
+    "digestive",
+    "consequence",
+    "latitude",
+    "controversial",
+    "employees",
+    "protesters",
+    "undertaking",
   ];
 
   // init game
@@ -60,6 +95,7 @@
   let score = 0;
   let time = 10;
   let overString;
+  let difficultySelection;
 
   const timeInterval = setInterval(updateTime, 1000);
 
@@ -101,7 +137,7 @@
   <button class="settings-btn" id="settings-btn">
     <i class="fas fa-cog" />
   </button>
-  <div class="settings" id="settings">
+  <div class="settings hide" id="settings">
     <form id="settins-form">
       <div class="diff">
         <label for="difficulty">Difficulty</label>
@@ -127,7 +163,13 @@
           addWord();
           updateScore();
           e.target.value = "";
-          time += 5;
+          if (difficulty == "hard") {
+            time += 2;
+          } else if (difficulty == "medium") {
+            time += 3;
+          } else {
+            time += 5;
+          }
         }
       }}
       autocomplete="off"
@@ -144,6 +186,29 @@
       {@html overString}
     </div>
   </div>
+  <script>
+    settingsBtn = document.getElementById("settings-btn");
+    settings = document.getElementById("settings");
+    settinsForm = document.getElementById("settins-form");
+    difficultySelection = document.getElementById("difficulty").value;
+    settingsBtn.addEventListener("click", () =>
+      settings.classList.toggle("hide")
+    );
+    let difficulty = "easy";
+    settinsForm.addEventListener("change", (e) => {
+      difficulty = e.target.value;
+      localStorage.setItem("difficulty", difficulty);
+    });
+    difficulty =
+      localStorage.getItem("difficulty") !== null
+        ? localStorage.getItem("difficulty")
+        : "easy";
+    difficultySelection =
+      localStorage.getItem("difficulty") !== null
+        ? localStorage.getItem("difficulty")
+        : "easy";
+    document.getElementById("difficulty").value = difficultySelection;
+  </script>
 </main>
 
 <style>
