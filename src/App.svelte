@@ -37,19 +37,41 @@
     "manifest",
     "resources",
     "distinction",
+    "Handling",
+    "Bindings",
+    "components",
+    "directive",
+    "uncheck",
+    "attribute",
+    "element",
+    "instance",
+    "boasting",
+    "advocates",
+    "notwithstand",
+    "multitude",
+    "substantial",
+    "modified",
   ];
 
   // init game
   let randomWord;
-  let typeText = "";
+  let typeText;
   let score = 0;
   let time = 10;
 
   function getRandomWord() {
     return words[Math.floor(Math.random() * words.length)];
   }
-  randomWord = getRandomWord();
-  console.log(typeText);
+  function addWord() {
+    randomWord = getRandomWord();
+  }
+
+  // update Score
+  function updateScore() {
+    score++;
+  }
+
+  addWord();
 </script>
 
 <main>
@@ -76,6 +98,14 @@
     <input
       type="text"
       id="text"
+      on:input={(e) => {
+        typeText = e.target.value;
+        if (typeText == randomWord) {
+          addWord();
+          updateScore();
+          e.target.value = "";
+        }
+      }}
       autocomplete="off"
       placeholder="Type the word here..."
     />
@@ -84,7 +114,7 @@
     </p>
 
     <p class="score-container">
-      Score: <span id="score">0</span>
+      Score: <span id="score">{score}</span>
     </p>
     <div class="end-game-container" id="end-game-container" />
   </div>
