@@ -51,6 +51,7 @@
     "multitude",
     "substantial",
     "modified",
+    "Recommend",
   ];
 
   // init game
@@ -58,6 +59,9 @@
   let typeText;
   let score = 0;
   let time = 10;
+  let overString;
+
+  const timeInterval = setInterval(updateTime, 1000);
 
   function getRandomWord() {
     return words[Math.floor(Math.random() * words.length)];
@@ -69,6 +73,25 @@
   // update Score
   function updateScore() {
     score++;
+  }
+
+  function updateTime() {
+    time--;
+
+    if (time == 0) {
+      clearInterval(timeInterval);
+      gameOver();
+    }
+  }
+
+  // game over here
+  function gameOver() {
+    overString = `<h1>Time ran out</h1>
+    <p>Your final score is ${score}</p>
+    <button onclick="location.reload()">Reload</button>`;
+
+    const endgameelement = document.getElementById("end-game-container");
+    endgameelement.style.display = "flex";
   }
 
   addWord();
@@ -104,19 +127,22 @@
           addWord();
           updateScore();
           e.target.value = "";
+          time += 5;
         }
       }}
       autocomplete="off"
       placeholder="Type the word here..."
     />
     <p class="time-container">
-      Time Left: <span id="time">10s</span>
+      Time Left: <span id="time">{time}s</span>
     </p>
 
     <p class="score-container">
       Score: <span id="score">{score}</span>
     </p>
-    <div class="end-game-container" id="end-game-container" />
+    <div class="end-game-container" id="end-game-container">
+      {@html overString}
+    </div>
   </div>
 </main>
 
@@ -229,7 +255,7 @@
   }
 
   .end-game-container {
-    background-color: inherit;
+    background-color: #282626;
     display: none;
     align-items: center;
     justify-content: center;
